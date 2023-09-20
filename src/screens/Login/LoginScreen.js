@@ -9,8 +9,9 @@ import {
   Alert,
 } from "react-native";
 
-export default function LoginScreen({ navigation }) {
-  const [username, setUsername] = useState("");
+export default function LoginScreen({ login }) {
+  const { onAuthenticate } = login();
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [inputErrors, setInputErrors] = useState({
@@ -20,7 +21,7 @@ export default function LoginScreen({ navigation }) {
 
   const validateInputs = () => {
     const errors = {};
-    if (username.trim() === "") {
+    if (email.trim() === "") {
       errors.isValidUsername = "Username or email is required";
     }
     if (password.trim() === "") {
@@ -34,12 +35,8 @@ export default function LoginScreen({ navigation }) {
 
     if (Object.keys(errors).length > 0) {
       setInputErrors(errors);
-    } else if (username === "enigma" && password === "123") {
-      setTimeout(() => {
-        navigation.navigate(PATH.TODO_LIST); // Pastikan PATH.TODO_LIST telah didefinisikan
-      }, 1000);
     } else {
-      Alert.alert("Incorrect", "Invalid Username or Password");
+      onAuthenticate(email, password);
     }
   };
 
@@ -65,13 +62,13 @@ export default function LoginScreen({ navigation }) {
       <View style={{ flex: 2, paddingHorizontal: 15 }}>
         <View style={styles.form}>
           <View style={styles.headerForm}>
-            <Text style={styles.title}>Assalmmu'alaikum!,</Text>
+            <Text style={styles.title}>Assalamu'alaikum!,</Text>
             <Text style={styles.title}>Selamat Datang Ya Akhi</Text>
           </View>
           <Text style={styles.label}>Email</Text>
           <TextInput
             onChangeText={(val) => {
-              setUsername(val);
+              setEmail(val);
               setInputErrors({
                 ...inputErrors,
                 isValidUsername: "",

@@ -1,31 +1,22 @@
-import { StyleSheet, View, Image,Text } from "react-native";
-import React from "react";
+import { StyleSheet, View, Image, Text } from "react-native";
+import React, { useEffect } from "react";
 
 import PATH from "../../navigation/NavigationPath";
 
-export default function SplashScreen({navigation}) {
+export default function SplashScreen({ navigation }) {
 
-    React.useEffect( () => {
-        setTimeout(() => {
-            navigation.navigate(PATH.LOGIN)
-        }, 3000);
-    },[])
+  useEffect(() => {
+    setTimeout(() => {
+      navigation.navigate(PATH.LOGIN)
+    }, 3000);
+  }, [])
 
   return (
     <View style={styles.container}>
       <Image
         style={styles.logo}
-        source={{
-          uri: "https://miro.medium.com/v2/resize:fit:2400/1*6mJO79AJUIV1qf3OzzQVtQ.png",
-        }}
+        source={require('../../shared/assets/logo.png')}
       />
-      <Text 
-      style={{
-        fontSize : 25,
-        fontWeight:'bold',
-        marginTop : 10,
-      }}
-      >Final Project</Text>
     </View>
   );
 }

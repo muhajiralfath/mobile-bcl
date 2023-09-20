@@ -5,6 +5,8 @@ import { View } from "react-native";
 import PATH from "./NavigationPath";
 import SplashScreen from "../screens/Splash/SplashScreen";
 import LoginScreen from "../screens/Login/LoginScreen";
+import {Login} from "../screens/Login/Login";
+import LoginService from "../services/LoginService";
 
 const Stack = createNativeStackNavigator();
 
@@ -19,9 +21,10 @@ const AppNavigation = () => {
         />
         <Stack.Screen
           name={PATH.LOGIN}
-          component={LoginScreen}
           options={{ headerShown: false }}
-        />
+        >
+            {() => <LoginScreen login={() => Login(LoginService)} /> }
+        </Stack.Screen>
         {/* <Stack.Group
           screenOptions={({ navigation }) => {
             return {
