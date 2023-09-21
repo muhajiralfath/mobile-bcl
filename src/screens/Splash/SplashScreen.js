@@ -8,14 +8,14 @@ export default function SplashScreen({ navigation }) {
   useEffect(() => {
     setTimeout(() => {
       navigation.navigate(PATH.LOGIN)
-    }, 3000);
+    }, 1000);
   }, [])
 
   return (
     <View style={styles.container}>
       <Image
         style={styles.logo}
-        source={require('../../shared/assets/logo.png')}
+        source={require('../../shared/assets/splash.gif')}
       />
     </View>
   );
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   logo: {
-    width: 200,
-    height: 200,
+    width: "100%",
+    height: "100%",
   },
 });
