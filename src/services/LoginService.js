@@ -1,5 +1,5 @@
-import {useDep} from "../context/DependencyContext";
-import LocalStorage from "../utils/LocalStorage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useDep } from "../context/DependencyContext";
 
 const LoginService = () => {
     const { apiClient } = useDep();
@@ -13,19 +13,19 @@ const LoginService = () => {
                 params: {
                     email: email,
                     password: password,
-                }
+                },
             });
             console.log("result", result.data.token);
-            await LocalStorage.setData('token', result.data.token);
+            await AsyncStorage.setItem("token", result.data.token);
         } catch (err) {
             console.log("LoginService", err);
             throw err;
         }
-    }
+    };
 
     return {
         login,
-    }
-}
+    };
+};
 
 export default LoginService;

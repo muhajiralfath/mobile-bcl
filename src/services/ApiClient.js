@@ -1,9 +1,9 @@
-import axios from "axios"
+import axios from "axios";
 import LocalStorage from "../utils/LocalStorage";
-import {GlobalError, UnauthorizedError} from "../utils/AppError";
+import { GlobalError, UnauthorizedError } from "../utils/AppError";
 
 const client = axios.create({
-    baseURL: "http://192.168.108.49:8080",
+    baseURL: "http://10.10.100.173:8080",
 });
 
 client.interceptors.request.use(async (config) => {
@@ -11,10 +11,10 @@ client.interceptors.request.use(async (config) => {
         const token = await LocalStorage.getData("token");
         config.headers = {
             Authorization: `Bearer ${token}`,
-        }
+        };
     }
     return config;
-})
+});
 
 const apiClient = async ({ url, method, params = null }) => {
     try {
@@ -29,6 +29,6 @@ const apiClient = async ({ url, method, params = null }) => {
             throw new GlobalError(`Error Global: ${err.response.data.msg}`);
         }
     }
-}
+};
 
 export default apiClient;

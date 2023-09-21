@@ -7,21 +7,21 @@ import apiClient from "./src/services/ApiClient";
 import Loading from "./src/shared/components/Loading";
 
 export default function App() {
-  return (
-    <SafeAreaView style={styles.container}>
-      <Provider store={store}>
-        <DepProvider services={{ apiClient }}>
-          <AppNavigation />
-          <Loading />
-          <StatusBar style="auto" />
-        </DepProvider>
-      </Provider>
-    </SafeAreaView>
-  );
+    return (
+        <SafeAreaView style={styles.container}>
+            <Provider store={store}>
+                <DepProvider services={{ apiClient }}>
+                    <AppNavigation />
+                    <Loading />
+                    <StatusBar style="auto" />
+                </DepProvider>
+            </Provider>
+        </SafeAreaView>
+    );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
+    container: {
+        flex: 1,
+    },
 });
