@@ -9,7 +9,7 @@ const billSlice = createSlice({
     initialState,
     reducers: {
         setBills: (state, action) => {
-            state.bills = action.payload;
+            state.bills = [...action.payload];
         },
     },
 });

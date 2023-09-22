@@ -10,19 +10,52 @@ import { setIsLoading } from "../../store/Loading/LoadingSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { onNavigate } from "../../navigation/RootNavigation";
 import PATH from "../../navigation/NavigationPath";
+import {
+    setDataDebtor,
+    setDebtorId,
+    setDebtorName,
+} from "../../store/Debtor/DebtorSlice";
+import { setBills } from "../../store/Bill/BillSlice";
 
 const HomeScreen = ({ home }) => {
     const { getDebtor, getBill } = home();
+    const { totalBill, setTotalBills } = useState(0);
+    const { tenor, setTenor } = useState(0);
     const dispatch = useDispatch();
     const debtorName = useSelector((state) => state.debtor.debtorName);
+    const debtorId = useSelector((state) => state.debtor.debtorId);
+    const bills = useSelector((state) => state.bills.bills);
 
     useEffect(() => {
         loadData();
     }, []);
 
+    const calculateBills = () => {
+        let billsAmount = 0;
+        let tenor = 0;
+        bills.forEach((bill) => {
+            if (!bill.isPaid) {
+                billsAmount += bill.debt;
+                tenor++;
+            }
+        });
+        setTotalBills(billsAmount);
+        setTenor(tenor);
+        return {
+            billsAmount,
+            tenor,
+        };
+    };
+
     const loadData = async () => {
         const data = await getDebtor();
-        dispatch();
+        dispatch(setDataDebtor(data));
+        dispatch(setDebtorName(data.name));
+        dispatch(setDebtorId(data.id));
+        const billData = await getBill(debtorId);
+        console.log(billData);
+        dispatch(setBills(billData));
+        calculateBills();
     };
 
     const logout = async () => {
@@ -76,8 +109,8 @@ const HomeScreen = ({ home }) => {
                 <View style={styles.CardTop}>
                     <CardComponent
                         name={debtorName}
-                        tenor={3}
-                        totalBill={12000000}
+                        tenor={tenor}
+                        totalBill={totalBill}
                     />
                 </View>
                 <HorizontalLine height={2} width="full" />

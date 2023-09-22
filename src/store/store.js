@@ -9,7 +9,7 @@ const store = configureStore({
         loading: loadingReducer,
         debtor: debtorReducer,
         login: loginReducer,
-        bill: billReducer,
+        bills: billReducer,
     },
 });
 

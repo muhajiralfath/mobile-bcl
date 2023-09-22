@@ -21,7 +21,7 @@ const CardComponent = ({ name, tenor, totalBill }) => {
             <View>
                 <Text
                     style={{
-                        fontSize: 30,
+                        fontSize: 24,
                         color: "red",
                         alignSelf: "flex-start",
                     }}

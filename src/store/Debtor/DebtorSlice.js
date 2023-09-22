@@ -19,9 +19,12 @@ const debtorSlice = createSlice({
         setDebtorName: (state, action) => {
             state.debtorName = action.payload;
         },
+        setDebtorId: (state, action) => {
+            state.debtorId = action.payload;
+        },
     },
 });
 
-export const { setDataDebtor, setDebtorName, updateDataDebtor } =
+export const { setDataDebtor, setDebtorName, updateDataDebtor, setDebtorId } =
     debtorSlice.actions;
 export default debtorSlice.reducer;
