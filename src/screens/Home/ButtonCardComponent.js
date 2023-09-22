@@ -19,10 +19,8 @@ export default ButtonCardComponent;
 const styles = StyleSheet.create({
     button: {
         flexDirection: "row",
-        // justifyContent: "space-evenly",
         gap: 44,
         alignItems: "center",
-        // backgroundColor: "grey",
         borderRadius: 10,
         padding: 24,
         paddingLeft: 42,

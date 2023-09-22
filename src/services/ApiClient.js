@@ -1,14 +1,15 @@
 import axios from "axios";
 import LocalStorage from "../utils/LocalStorage";
 import { GlobalError, UnauthorizedError } from "../utils/AppError";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const client = axios.create({
-    baseURL: "http://10.10.100.173:8080",
+    baseURL: "http://10.10.100.223:8080",
 });
 
 client.interceptors.request.use(async (config) => {
     if (config.url !== "/api/auth/login") {
-        const token = await LocalStorage.getData("token");
+        const token = await AsyncStorage.getItem("token");
         config.headers = {
             Authorization: `Bearer ${token}`,
         };
