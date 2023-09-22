@@ -2,14 +2,20 @@ import { StyleSheet, View } from "react-native";
 import React from "react";
 import { Text } from "@react-native-material/core";
 
-const CardComponent = () => {
+const CardComponent = ({ name, tenor, totalBill }) => {
+    const totalMountBill = new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+    }).format(totalBill);
+
     return (
         <View style={styles.card}>
             <View>
                 <Text style={{}}>Total Dept : </Text>
-                <Text style={styles.accountName}>Al Fath</Text>
+                <Text style={styles.accountName}>{name}</Text>
                 <Text style={styles.balance}>
-                    Rest Of Bills <Text style={{ color: "red" }}>5 Month</Text>{" "}
+                    Rest Of Bills{" "}
+                    <Text style={{ color: "red" }}>{tenor} Month</Text>{" "}
                 </Text>
             </View>
             <View>
@@ -20,7 +26,7 @@ const CardComponent = () => {
                         alignSelf: "flex-start",
                     }}
                 >
-                    Rp. 12.000.000
+                    {totalMountBill}
                 </Text>
             </View>
         </View>

@@ -9,8 +9,6 @@ const DebtorService = () => {
                 method: "get",
                 url: "/api/debtors/me",
             });
-            console.log("Check Service");
-            console.log(result.data);
             return result.data;
         } catch (err) {
             console.log("Error Service getDebtorByToken", err);
@@ -25,7 +23,6 @@ const DebtorService = () => {
                 url: "/api/debtors",
                 body: dataDebtor,
             });
-            console.log("result", result.data);
             return result.data;
         } catch (err) {
             console.log("Error Service update Debtor", err);

@@ -1,20 +1,45 @@
 import { Image, StyleSheet, View } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import CardComponent from "./CardComponent";
 import ButtonCardComponent from "./ButtonCardComponent";
 import HorizontalLine from "../../shared/components/HorizontalLine";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsLoading } from "../../store/Loading/LoadingSlice";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { onNavigate } from "../../navigation/RootNavigation";
+import PATH from "../../navigation/NavigationPath";
 
 const HomeScreen = ({ home }) => {
     const { getDebtor, getBill } = home();
+    const dispatch = useDispatch();
+    const debtorName = useSelector((state) => state.debtor.debtorName);
+
     useEffect(() => {
-        const debtorData = getDebtorData();
-        console.log(debtorData);
+        loadData();
     }, []);
 
-    const getDebtorData = async () => {
-        return await getDebtor();
+    const loadData = async () => {
+        const data = await getDebtor();
+        dispatch();
+    };
+
+    const logout = async () => {
+        dispatch(setIsLoading(true));
+        await AsyncStorage.removeItem("token");
+        dispatch(setIsLoading(false));
+        onNavigate({
+            routeName: PATH.LOGIN,
+            isReplace: true,
+        });
+    };
+
+    const toProfile = () => {
+        onNavigate({
+            routeName: PATH.PROFILE,
+            isReplace: true,
+        });
     };
 
     return (
@@ -34,6 +59,7 @@ const HomeScreen = ({ home }) => {
                         variant="outlined"
                         color="white"
                         leading={(props) => <Icon name="account" {...props} />}
+                        onPress={toProfile}
                     />
                     <Button
                         style={{
@@ -42,12 +68,17 @@ const HomeScreen = ({ home }) => {
                         variant="outlined"
                         color="white"
                         leading={(props) => <Icon name="login" {...props} />}
+                        onPress={logout}
                     />
                 </View>
             </View>
             <View style={styles.body}>
                 <View style={styles.CardTop}>
-                    <CardComponent />
+                    <CardComponent
+                        name={debtorName}
+                        tenor={3}
+                        totalBill={12000000}
+                    />
                 </View>
                 <HorizontalLine height={2} width="full" />
                 <View style={styles.CardButton}>

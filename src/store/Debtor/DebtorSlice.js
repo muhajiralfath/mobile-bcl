@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     debtor: {},
+    debtorId: "",
+    debtorName: "",
 };
 
 const debtorSlice = createSlice({
@@ -14,8 +16,12 @@ const debtorSlice = createSlice({
         updateDataDebtor: (state, action) => {
             Object.assign(state.debtor, action.payload);
         },
+        setDebtorName: (state, action) => {
+            state.debtorName = action.payload;
+        },
     },
 });
 
-export const { debtor } = debtorSlice.actions;
+export const { setDataDebtor, setDebtorName, updateDataDebtor } =
+    debtorSlice.actions;
 export default debtorSlice.reducer;
