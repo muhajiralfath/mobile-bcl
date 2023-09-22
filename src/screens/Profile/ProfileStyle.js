@@ -44,7 +44,14 @@ const ProfileStyle = StyleSheet.create({
         fontSize: 16,
     },
     avatar:{
-        alignItems: "center",
+        alignItems: "flex-end",
+        justifyContent:"center",
+        flexDirection:"row"
+    },
+    viewBtnSIUP:{
+        width:"50%",
+        marginBottom:5,
+        justifyContent:"center"
     }
 })
 

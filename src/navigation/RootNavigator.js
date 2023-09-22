@@ -16,6 +16,7 @@ import { navigationRef } from "./RootNavigation";
 import { Home } from "../screens/Home/Home";
 import DebtorService from "../services/DebtorService";
 import BillService from "../services/BillService";
+import {Profile} from "../screens/Profile/Profile";
 
 const Stack = createNativeStackNavigator();
 
@@ -42,11 +43,12 @@ const AppNavigation = () => {
                         />
                     )}
                 </Stack.Screen>
+
                 <Stack.Screen
                     name={PATH.PROFILE}
                     options={{ headerShown: false }}
                 >
-                    {() => <ProfileScreen />}
+                    {() => <ProfileScreen profile={() => Profile()} />}
                 </Stack.Screen>
 
                 <Stack.Screen
