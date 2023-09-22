@@ -19,33 +19,23 @@ import { setBills } from "../../store/Bill/BillSlice";
 
 const HomeScreen = ({ home }) => {
     const { getDebtor, getBill } = home();
-    const { totalBill, setTotalBills } = useState(0);
+    const { totalBill, setTotalBill } = useState(0);
     const { tenor, setTenor } = useState(0);
+    const [bills, setBills] = useState([]);
     const dispatch = useDispatch();
     const debtorName = useSelector((state) => state.debtor.debtorName);
     const debtorId = useSelector((state) => state.debtor.debtorId);
-    const bills = useSelector((state) => state.bills.bills);
+    // const bills = useSelector((state) => state.bills.bills);
 
     useEffect(() => {
         loadData();
     }, []);
 
-    const calculateBills = () => {
-        let billsAmount = 0;
-        let tenor = 0;
-        bills.forEach((bill) => {
-            if (!bill.isPaid) {
-                billsAmount += bill.debt;
-                tenor++;
-            }
-        });
-        setTotalBills(billsAmount);
+    useEffect(() => {
+        const { billsAmount, tenor } = calculateBills();
+        setTotalBill(billsAmount);
         setTenor(tenor);
-        return {
-            billsAmount,
-            tenor,
-        };
-    };
+    }, [bills]);
 
     const loadData = async () => {
         const data = await getDebtor();
@@ -53,19 +43,21 @@ const HomeScreen = ({ home }) => {
         dispatch(setDebtorName(data.name));
         dispatch(setDebtorId(data.id));
         const billData = await getBill(debtorId);
-        console.log(billData);
-        dispatch(setBills(billData));
-        calculateBills();
+        // console.log(billData);
+        setBills(billData);
+        // setBills((state) => state.push(...billData));
     };
 
     const logout = async () => {
         dispatch(setIsLoading(true));
         await AsyncStorage.removeItem("token");
-        dispatch(setIsLoading(false));
+        dispatch(setDataDebtor({}));
+        dispatch(setDebtorName(""));
+        dispatch(setDebtorId(""));
         onNavigate({
             routeName: PATH.LOGIN,
-            isReplace: true,
         });
+        dispatch(setIsLoading(false));
     };
 
     const toProfile = () => {
@@ -73,6 +65,23 @@ const HomeScreen = ({ home }) => {
             routeName: PATH.PROFILE,
             isReplace: true,
         });
+    };
+
+    const calculateBills = () => {
+        let billsAmount = 0;
+        let tenor = 0;
+        if (bills && bills.length > 0) {
+            bills.forEach((bill) => {
+                if (!bill.isPaid) {
+                    billsAmount += bill.debt;
+                    tenor++;
+                }
+            });
+        }
+        return {
+            billsAmount,
+            tenor,
+        };
     };
 
     return (
