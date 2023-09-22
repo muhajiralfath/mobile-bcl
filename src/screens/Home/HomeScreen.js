@@ -15,12 +15,11 @@ import {
     setDebtorId,
     setDebtorName,
 } from "../../store/Debtor/DebtorSlice";
-import { setBills } from "../../store/Bill/BillSlice";
 
 const HomeScreen = ({ home }) => {
     const { getDebtor, getBill } = home();
-    const { totalBill, setTotalBill } = useState(0);
-    const { tenor, setTenor } = useState(0);
+    const [totalBill, setTotalBill] = useState(0);
+    const [tenor, setTenor] = useState(0);
     const [bills, setBills] = useState([]);
     const dispatch = useDispatch();
     const debtorName = useSelector((state) => state.debtor.debtorName);
@@ -43,7 +42,6 @@ const HomeScreen = ({ home }) => {
         dispatch(setDebtorName(data.name));
         dispatch(setDebtorId(data.id));
         const billData = await getBill(debtorId);
-        // console.log(billData);
         setBills(billData);
         // setBills((state) => state.push(...billData));
     };
@@ -54,9 +52,11 @@ const HomeScreen = ({ home }) => {
         dispatch(setDataDebtor({}));
         dispatch(setDebtorName(""));
         dispatch(setDebtorId(""));
+        setBills([]);
         onNavigate({
             routeName: PATH.LOGIN,
         });
+
         dispatch(setIsLoading(false));
     };
 
