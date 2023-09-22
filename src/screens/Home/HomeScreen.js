@@ -1,4 +1,4 @@
-import { Image, StyleSheet, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Button } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
@@ -21,10 +21,9 @@ const HomeScreen = ({ home }) => {
     const [totalBill, setTotalBill] = useState(0);
     const [tenor, setTenor] = useState(0);
     const [bills, setBills] = useState([]);
+    const [debtorName, setDebtorName] = useState("-");
+    const [debtorId, setDebtorId] = useState("");
     const dispatch = useDispatch();
-    const debtorName = useSelector((state) => state.debtor.debtorName);
-    const debtorId = useSelector((state) => state.debtor.debtorId);
-    // const bills = useSelector((state) => state.bills.bills);
 
     useEffect(() => {
         loadData();
@@ -32,31 +31,25 @@ const HomeScreen = ({ home }) => {
 
     useEffect(() => {
         const { billsAmount, tenor } = calculateBills();
-        setTotalBill(billsAmount);
-        setTenor(tenor);
+        setTotalBill((bills) => (bills = billsAmount));
+        setTenor((ten) => (ten = tenor));
     }, [bills]);
 
     const loadData = async () => {
         const data = await getDebtor();
-        dispatch(setDataDebtor(data));
-        dispatch(setDebtorName(data.name));
-        dispatch(setDebtorId(data.id));
-        const billData = await getBill(debtorId);
+        setDebtorId((id) => (id = data.debtorId));
+        setDebtorName((name) => (name = data.name));
+        const billData = await getBill(data.debtorId);
+
         setBills(billData);
-        // setBills((state) => state.push(...billData));
     };
 
     const logout = async () => {
         dispatch(setIsLoading(true));
         await AsyncStorage.removeItem("token");
-        dispatch(setDataDebtor({}));
-        dispatch(setDebtorName(""));
-        dispatch(setDebtorId(""));
-        setBills([]);
         onNavigate({
             routeName: PATH.LOGIN,
         });
-
         dispatch(setIsLoading(false));
     };
 

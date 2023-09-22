@@ -7,7 +7,7 @@ const BillService = () => {
         try {
             const result = await apiClient({
                 method: "get",
-                url: `/api/bills/${debtorId}`,
+                url: `/api/bills/debtor/${debtorId}`,
             });
             return result.data;
         } catch (err) {
