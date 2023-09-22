@@ -7,18 +7,33 @@ import SplashScreen from "../screens/Splash/SplashScreen";
 import LoginScreen from "../screens/Login/LoginScreen";
 import {Login} from "../screens/Login/Login";
 import LoginService from "../services/LoginService";
+import ProfileScreen from "../screens/Profile/ProfileScreen";
+import MyBillScreen from "../screens/MyBill/MyBillScreen";
 
 const Stack = createNativeStackNavigator();
 
 const AppNavigation = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={PATH.SPLASH}>
-        <Stack.Screen
-          name={PATH.SPLASH}
-          component={SplashScreen}
-          options={{ headerShown: false }}
-        />
+      <Stack.Navigator>
+          <Stack.Screen
+            name={PATH.PROFILE}
+            options={{ headerShown: false }}
+          >{() => <ProfileScreen/> }
+          </Stack.Screen>
+
+          <Stack.Screen
+              name={PATH.MYBILL}
+              options={{ headerShown: false }}
+          >{() => <MyBillScreen/> }
+          </Stack.Screen>
+
+          <Stack.Screen
+              name={PATH.SPLASH}
+              component={SplashScreen}
+              options={{ headerShown: false }}
+          />
+
         <Stack.Screen
           name={PATH.LOGIN}
           options={{ headerShown: false }}

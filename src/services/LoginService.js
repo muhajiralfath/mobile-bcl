@@ -10,7 +10,7 @@ const LoginService = () => {
             const result = await apiClient({
                 method: "post",
                 url: "/api/auth/login",
-                params: {
+                body: {
                     email: email,
                     password: password,
                 }
