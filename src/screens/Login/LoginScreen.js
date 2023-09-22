@@ -7,14 +7,18 @@ import {
     Image,
     TouchableOpacity,
     Alert,
+    Button,
 } from "react-native";
 import { onNavigate } from "../../navigation/RootNavigation";
 import PATH from "../../navigation/NavigationPath";
+import { useDispatch } from "react-redux";
+import { setIsLoading } from "../../store/Loading/LoadingSlice";
 
 export default function LoginScreen({ login }) {
     const { onAuthenticate } = login();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const dispatch = useDispatch();
 
     const [inputErrors, setInputErrors] = useState({
         isValidUsername: "",

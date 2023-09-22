@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 
 export default function Loading() {
     const isLoading = useSelector((state) => state.loading.isLoading);
-
     return (
         isLoading && (
             <View style={[StyleSheet.absoluteFill, styles.container]}>

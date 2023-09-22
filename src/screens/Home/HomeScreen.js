@@ -9,9 +9,13 @@ import HorizontalLine from "../../shared/components/HorizontalLine";
 const HomeScreen = ({ home }) => {
     const { getDebtor, getBill } = home();
     useEffect(() => {
-        const debtorData = getDebtor();
+        const debtorData = getDebtorData();
         console.log(debtorData);
     }, []);
+
+    const getDebtorData = async () => {
+        return await getDebtor();
+    };
 
     return (
         <View style={styles.container}>
