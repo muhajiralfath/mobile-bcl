@@ -6,7 +6,6 @@ const LoginService = () => {
 
     const login = async (email, password) => {
         try {
-            console.log("LoginService", email, password);
             const result = await apiClient({
                 method: "post",
                 url: "/api/auth/login",
@@ -15,7 +14,6 @@ const LoginService = () => {
                     password: password,
                 },
             });
-            console.log("result", result.data.token);
             await AsyncStorage.setItem("token", result.data.token);
         } catch (err) {
             console.log("LoginService", err);

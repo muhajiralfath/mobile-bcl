@@ -12,55 +12,62 @@ import MyBillScreen from "../screens/MyBill/MyBillScreen";
 import HomeScreen from "../screens/Home/HomeScreen";
 import SubmissionScreen from "../screens/Submission/SubmissionScreen";
 import FormScreen from "../screens/Form/FormScreen";
+import { navigationRef } from "./RootNavigation";
+import { Home } from "../screens/Home/Home";
+import DebtorService from "../services/DebtorService";
+import BillService from "../services/BillService";
 
 const Stack = createNativeStackNavigator();
 
 const AppNavigation = () => {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-          <Stack.Screen
-            name={PATH.PROFILE}
-            options={{ headerShown: false }}
-          >{() => <ProfileScreen/> }
-          </Stack.Screen>
+    return (
+        <NavigationContainer ref={navigationRef}>
+            <Stack.Navigator initialRouteName={PATH.SPLASH}>
+                <Stack.Screen
+                    name={PATH.SPLASH}
+                    component={SplashScreen}
+                    options={{ headerShown: false }}
+                />
 
-          <Stack.Screen
-              name={PATH.MYBILL}
-              options={{ headerShown: false }}
-          >{() => <MyBillScreen/> }
-          </Stack.Screen>
+                <Stack.Screen
+                    name={PATH.LOGIN}
+                    options={{ headerShown: false }}
+                >
+                    {() => <LoginScreen login={() => Login(LoginService)} />}
+                </Stack.Screen>
+                <Stack.Screen name={PATH.HOME} options={{ headerShown: false }}>
+                    {() => (
+                        <HomeScreen
+                            home={() => Home(DebtorService, BillService)}
+                        />
+                    )}
+                </Stack.Screen>
+                <Stack.Screen
+                    name={PATH.PROFILE}
+                    options={{ headerShown: false }}
+                >
+                    {() => <ProfileScreen />}
+                </Stack.Screen>
 
-          <Stack.Screen
-              name={PATH.SPLASH}
-              component={SplashScreen}
-              options={{ headerShown: false }}
-          />
+                <Stack.Screen
+                    name={PATH.MYBILL}
+                    options={{ headerShown: false }}
+                >
+                    {() => <MyBillScreen />}
+                </Stack.Screen>
 
-        <Stack.Screen
-          name={PATH.LOGIN}
-          options={{ headerShown: false }}
-        >
-            {() => <LoginScreen login={() => Login(LoginService)} /> }
-        </Stack.Screen>
-          <Stack.Screen
-              name={PATH.HOME}
-              options={{ headerShown: false }}
-              component={HomeScreen}
-          ></Stack.Screen>
-          <Stack.Screen
-              name={PATH.SUBMISSION}
-              options={{ headerShown: false }}
-          >
-              {() => <SubmissionScreen />}
-          </Stack.Screen>
-          <Stack.Screen name={PATH.FORM} options={{ headerShown: false }}>
-              {() => <FormScreen />}
-          </Stack.Screen>
-
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+                <Stack.Screen
+                    name={PATH.SUBMISSION}
+                    options={{ headerShown: false }}
+                >
+                    {() => <SubmissionScreen />}
+                </Stack.Screen>
+                <Stack.Screen name={PATH.FORM} options={{ headerShown: false }}>
+                    {() => <FormScreen />}
+                </Stack.Screen>
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
 };
 
 export default AppNavigation;

@@ -1,12 +1,18 @@
 import { Image, StyleSheet, View } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import CardComponent from "./CardComponent";
 import ButtonCardComponent from "./ButtonCardComponent";
 import HorizontalLine from "../../shared/components/HorizontalLine";
 
-const HomeScreen = () => {
+const HomeScreen = ({ home }) => {
+    const { getDebtor, getBill } = home();
+    useEffect(() => {
+        const debtorData = getDebtor();
+        console.log(debtorData);
+    }, []);
+
     return (
         <View style={styles.container}>
             <View style={styles.headWrapper}>

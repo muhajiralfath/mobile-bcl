@@ -1,6 +1,7 @@
 import { onNavigate } from "../../navigation/RootNavigation";
 import PATH from "../../navigation/NavigationPath";
-import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import { setIsLoading } from "../../store/Loading/LoadingSlice";
 
 export const Login = (service) => {
     const { login } = service();
@@ -11,8 +12,8 @@ export const Login = (service) => {
             console.log(email, password);
             onNavigate({
                 routeName: PATH.HOME,
+                isReplace: true,
             });
-            console.log("check navigation");
         } catch (err) {
             console.log("login.js", err);
         }
