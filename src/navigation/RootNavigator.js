@@ -7,6 +7,9 @@ import SplashScreen from "../screens/Splash/SplashScreen";
 import LoginScreen from "../screens/Login/LoginScreen";
 import { Login } from "../screens/Login/Login";
 import LoginService from "../services/LoginService";
+import RegisterScreen from "../screens/Register/RegisterScreen";
+import { Register } from "../screens/Register/Register";
+import RegisterService from "../services/RegisterService";
 import ProfileScreen from "../screens/Profile/ProfileScreen";
 import MyBillScreen from "../screens/MyBill/MyBillScreen";
 import HomeScreen from "../screens/Home/HomeScreen";
@@ -40,6 +43,12 @@ const AppNavigation = () => {
                     options={{ headerShown: false }}
                 >
                     {() => <LoginScreen login={() => Login(LoginService)} />}
+                </Stack.Screen>
+                <Stack.Screen
+                    name={PATH.REGISTER}
+                    options={{ headerShown: false }}
+                >
+                    {() => <RegisterScreen register={() => Register(RegisterService)} />}
                 </Stack.Screen>
                 <Stack.Screen name={PATH.HOME} options={{ headerShown: false }}>
                     {() => (

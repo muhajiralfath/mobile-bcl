@@ -6,44 +6,51 @@ import {
   View,
   Image,
   TouchableOpacity,
-  Alert,
-  Button,
 } from "react-native";
-import { onNavigate } from "../../navigation/RootNavigation";
 import PATH from "../../navigation/NavigationPath";
-import { useDispatch } from "react-redux";
-import { setIsLoading } from "../../store/Loading/LoadingSlice";
 import { useNavigation } from "@react-navigation/native";
 
-export default function LoginScreen({ login }) {
-  const { onAuthenticate } = login();
+export default function RegisterScreen({ register }) {
+  const { onRegister } = register();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const dispatch = useDispatch();
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const [inputErrors, setInputErrors] = useState({
-    isValidUsername: "",
+    isValidEmail: "",
     isValidPassword: "",
   });
 
   const validateInputs = () => {
     const errors = {};
+
     if (email.trim() === "") {
-      errors.isValidUsername = "Username or email is required";
+      errors.isValidEmail = "Email is required";
     }
+
     if (password.trim() === "") {
       errors.isValidPassword = "Password is required";
+    } else if (password.trim().length < 8) {
+      errors.isValidPassword = "Password must be at least 8 characters long";
+    }
+
+    if (password !== confirmPassword) {
+      errors.isValidPassword = "Passwords do not match";
     }
     return errors;
   };
 
-  const submitLogin = () => {
+  const submitRegister = () => {
     const errors = validateInputs();
-
     if (Object.keys(errors).length > 0) {
       setInputErrors(errors);
     } else {
-      onAuthenticate(email, password);
+      try {
+        onRegister(email, password);
+        console.log("Registration successful!");
+      } catch (err) {
+        console.log("RegisterScreen.js", err);
+      }
     }
   };
 
@@ -56,8 +63,8 @@ export default function LoginScreen({ login }) {
   };
 
   const navigation = useNavigation();
-  const toRegister = () => {
-    navigation.navigate(PATH.REGISTER);
+  const toLogin = () => {
+    navigation.navigate(PATH.LOGIN);
   };
 
   return (
@@ -83,13 +90,13 @@ export default function LoginScreen({ login }) {
               setEmail(val);
               setInputErrors({
                 ...inputErrors,
-                isValidUsername: "",
+                isValidEmail: "",
               });
             }}
-            placeholder="Username or Email"
+            placeholder="Email"
             style={styles.input}
           />
-          {isErrorView(inputErrors.isValidUsername)}
+          {isErrorView(inputErrors.isValidEmail)}
           <Text style={styles.label}>Password</Text>
           <TextInput
             onChangeText={(val) => {
@@ -104,17 +111,31 @@ export default function LoginScreen({ login }) {
             placeholder="Password"
           />
           {isErrorView(inputErrors.isValidPassword)}
+          <Text style={styles.label}>Confirm Password</Text>
+          <TextInput
+            onChangeText={(val) => {
+              setConfirmPassword(val);
+              setInputErrors({
+                ...inputErrors,
+                isValidPassword: "",
+              });
+            }}
+            style={styles.input}
+            secureTextEntry={true}
+            placeholder="Confirm Password"
+          />
+          {isErrorView(inputErrors.isValidPassword)}
           <View style={{ marginVertical: 6 }}>
-            <TouchableOpacity style={styles.btn} onPress={submitLogin}>
-              <Text style={{ color: "white" }}>Login</Text>
+            <TouchableOpacity style={styles.btn} onPress={submitRegister}>
+              <Text style={{ color: "white" }}>Register</Text>
             </TouchableOpacity>
             <Text style={{ color: "#2D303F" }}>
-              Don't Have an account yet? {"    "}
+              Already have an account? {"           "}
               <Text
                 style={{ color: "#78C1F3", textDecorationLine: "underline" }}
-                onPress={toRegister}
+                onPress={toLogin}
               >
-                Register here!
+                Login here!
               </Text>
             </Text>
           </View>
