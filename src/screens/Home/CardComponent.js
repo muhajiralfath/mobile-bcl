@@ -12,10 +12,10 @@ const CardComponent = ({ name, tenor, totalBill }) => {
         <View style={styles.card}>
             <View>
                 <Text style={{}}>Total Dept : </Text>
-                <Text style={styles.accountName}>{name}</Text>
+                <Text style={styles.accountName}>{name ? name : "-"}</Text>
                 <Text style={styles.balance}>
-                    Rest Of Bills{" "}
-                    <Text style={{ color: "red" }}>{tenor} Month</Text>{" "}
+                    Rest Of Bills : {" "}
+                    <Text style={{ color: "red" }}>{tenor}</Text>{" "}
                 </Text>
             </View>
             <View>
@@ -26,7 +26,7 @@ const CardComponent = ({ name, tenor, totalBill }) => {
                         alignSelf: "flex-start",
                     }}
                 >
-                    {totalMountBill}
+                    {totalMountBill ? totalMountBill : "-"}
                 </Text>
             </View>
         </View>
