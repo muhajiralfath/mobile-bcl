@@ -3,7 +3,7 @@ import {useDispatch} from "react-redux";
 
 export const Profile = (debtorService, umkmService) => {
     const {getDebtorByToken, updateDebtor} = debtorService()
-    const {createUmkm, updateUmkm, getById, getByDebtorID} = umkmService()
+    const {createUmkm, updateUmkm, getById, getByDebtorId} = umkmService()
     const dispatch = useDispatch();
 
     const getDebtor = async () => {
@@ -30,7 +30,7 @@ export const Profile = (debtorService, umkmService) => {
     const getUMKMByDebtorId = async (debtorId) => {
         try {
             dispatch(setIsLoading(true));
-            const umkm = await getByDebtorID(debtorId)
+            const umkm = await getByDebtorId(debtorId)
             return umkm
         }catch (e){
             console.log("Profile_getUMKMByDebtorId", e)

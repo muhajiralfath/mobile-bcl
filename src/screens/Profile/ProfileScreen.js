@@ -40,28 +40,30 @@ export default function ProfileScreen({profile}){
 
     const loadData = async () => {
         const dataDebtor = await getDebtor()
-        setDebtorId(dataDebtor.debtorId)
-        setNik(dataDebtor.nik)
-        setNpwp(dataDebtor.npwp)
-        setName(dataDebtor.name)
-        setEmail(dataDebtor.email)
-        setBirthPlace(dataDebtor.birthPlace)
-        setHandphone(dataDebtor.handphone)
-        setGender(dataDebtor.gender)
-        setBirthDate(dataDebtor.birthDate)
-        setJob(dataDebtor.job)
-        setStatus(dataDebtor.status)
-        setAddress(dataDebtor.address)
+        setDebtorId(dataDebtor.debtorId || "")
+        setNik(dataDebtor.nik || "")
+        setNpwp(dataDebtor.npwp || "")
+        setName(dataDebtor.name || "")
+        setEmail(dataDebtor.email || "")
+        setBirthPlace(dataDebtor.birthPlace || "")
+        setHandphone(dataDebtor.handphone || "")
+        setGender(dataDebtor.gender || "")
+        setBirthDate(dataDebtor.birthDate || "")
+        setJob(dataDebtor.job || "")
+        setStatus(dataDebtor.status || "")
+        setAddress(dataDebtor.address || "")
 
         const dataUmkm = await getUMKMByDebtorId(dataDebtor.debtorId)
-        setUmkmId(dataUmkm.umkmId)
-        setNoSiup(dataUmkm.noSiup)
-        setUmkmName(dataUmkm.umkmName)
-        setAddressUmkm(dataUmkm.address)
-        setCapital(dataUmkm.capital.toString())
-        setUmkmType(dataUmkm.umkmType)
-        setBankAccount(dataUmkm.bankAccount)
-        setDocumentId(dataUmkm.documentId)
+        if(dataUmkm){
+            setUmkmId(dataUmkm.umkmId)
+            setNoSiup(dataUmkm.noSiup)
+            setUmkmName(dataUmkm.umkmName)
+            setAddressUmkm(dataUmkm.address)
+            setCapital(dataUmkm.capital.toString())
+            setUmkmType(dataUmkm.umkmType)
+            setBankAccount(dataUmkm.bankAccount)
+            setDocumentId(dataUmkm.documentId)
+        }
     }
 
     useEffect(() => {
@@ -191,35 +193,17 @@ export default function ProfileScreen({profile}){
 
     const validateInputsProfile = () => {
         const errors = {}
-        if (nik.trim() === "") {
-            errors.validNik = "NIK is required";
-        }
-        if(npwp.trim() === ""){
-            errors.validNPWP = "NPWP is required"
-        }
-        if(name.trim() === ""){
-            errors.validName = "Name is required"
-        }
-        if(email.trim() === ""){
-            errors.validEmail = "Email is required"
-        }
-        if(birthPlace.trim() === ""){
-            errors.validBirthPlace = "Birth Plce is required"
-        }
-        if(handphone.trim() === ""){
-            errors.validHandphone = "Handphone is required"
-        }
-        if(gender.trim() === ""){
-            errors.validGender = "Gender is required"
-        }
-        if(birthDate.trim() === ""){
-            errors.validBirthDate = "Birth Date is required"
-        }
-        if(job.trim() === ""){
-            errors.validJob = "Job is required"
-        }
-        if(status.trim() === "") errors.validStatus = "Status is required"
-        if(address.trim() === "") errors.validAddress = "Address is required"
+        if(!nik.trim()) errors.validNik = "NIK is required"
+        if(!npwp.trim()) errors.validNPWP = "NPWP is required"
+        if(!name.trim()) errors.validName = "Name is required"
+        if(!email.trim()) errors.validEmail = "Email is required"
+        if(!birthPlace.trim()) errors.validBirthPlace = "Birth Plce is required"
+        if(!handphone.trim()) errors.validHandphone = "Handphone is required"
+        if(!gender.trim()) errors.validGender = "Gender is required"
+        if(!birthDate.trim()) errors.validBirthDate = "Birth Date is required"
+        if(!job.trim()) errors.validJob = "Job is required"
+        if(!status.trim()) errors.validStatus = "Status is required"
+        if(!address.trim()) errors.validAddress = "Address is required"
 
         return errors;
     };
@@ -227,12 +211,12 @@ export default function ProfileScreen({profile}){
     const validateInputsUmkm = () => {
         const errors = {};
 
-        if(umkmName.trim() === "") errors.validUmkmName = "Name is required"
-        if(noSiup.trim() === "") errors.validNoSiup = "No. SIUP is required"
+        if(!umkmName.trim()) errors.validUmkmName = "Name is required"
+        if(!noSiup.trim()) errors.validNoSiup = "No. SIUP is required"
         if(!capital.trim()) errors.validCapital = "Capital is invalid"
-        if(bankAccount.trim() === "") errors.validBankAccount = "Bank Account is required"
-        if(umkmType.trim() === "") errors.validUmkmType = "Type is required"
-        if(addressUmkm.trim() === "") errors.validAddressUmkm = "Address is required"
+        if(!bankAccount.trim()) errors.validBankAccount = "Bank Account is required"
+        if(!umkmType.trim()) errors.validUmkmType = "Type is required"
+        if(!addressUmkm.trim()) errors.validAddressUmkm = "Address is required"
 
         return errors
     }

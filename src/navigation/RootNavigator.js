@@ -20,8 +20,6 @@ import { Home } from "../screens/Home/Home";
 import DebtorService from "../services/DebtorService";
 import BillService from "../services/BillService";
 import {Profile} from "../screens/Profile/Profile";
-import UmkmService from "../services/UmkmService";
-import { Profile } from "../screens/Profile/Profile";
 import { Submission } from "../screens/Submission/Submission";
 import SubmissionService from "../services/SubmissionService";
 import {MyBill} from "../screens/MyBill/MyBill";
