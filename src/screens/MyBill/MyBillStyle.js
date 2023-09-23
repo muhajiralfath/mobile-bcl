@@ -43,6 +43,11 @@ const MyBillStyle = StyleSheet.create({
         height:50,
         width:"100%",
         backgroundColor:"#2D303F"
+    },
+    paymentModal: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     }
 })
 

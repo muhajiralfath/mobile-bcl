@@ -33,7 +33,6 @@ const HomeScreen = ({ home }) => {
         const data = await getDebtor();
         setDebtorName((name) => (name = data.name));
         const billData = await getBill(data.debtorId);
-
         setBills(billData);
     };
 
@@ -52,6 +51,13 @@ const HomeScreen = ({ home }) => {
             isReplace: true,
         });
     };
+
+    const toMyBill = () => {
+        onNavigate({
+            routeName: PATH.MYBILL,
+            isReplace: false,
+        })
+    }
 
     const calculateBills = () => {
         let billsAmount = 0;
@@ -127,6 +133,7 @@ const HomeScreen = ({ home }) => {
                         colorIcon="white"
                         nameCard="View Bill"
                         bgColor="#6a5acd"
+                        onPress={toMyBill}
                     />
                     <ButtonCardComponent
                         nameIcon="badge-account-horizontal-outline"
@@ -153,7 +160,6 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 32,
-        color: "black",
         fontWeight: "bold",
         color: "white",
     },

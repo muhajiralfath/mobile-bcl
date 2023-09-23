@@ -19,6 +19,7 @@ import BillService from "../services/BillService";
 import { Profile } from "../screens/Profile/Profile";
 import { Submission } from "../screens/Submission/Submission";
 import SubmissionService from "../services/SubmissionService";
+import {MyBill} from "../screens/MyBill/MyBill";
 
 const Stack = createNativeStackNavigator();
 
@@ -57,7 +58,7 @@ const AppNavigation = () => {
                     name={PATH.MYBILL}
                     options={{ headerShown: false }}
                 >
-                    {() => <MyBillScreen />}
+                    {() => <MyBillScreen myBill={() => MyBill(BillService)} />}
                 </Stack.Screen>
 
                 <Stack.Screen
