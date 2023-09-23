@@ -53,17 +53,17 @@ export default SubCardComponent;
 const getStyleCard = (isApprove) => {
     let backgroundColor, iconName, colorButton, titleButton;
     if (isApprove === true) {
-        backgroundColor = "green";
+        backgroundColor = "yellowgreen";
         iconName = "progress-check";
         colorButton = "green";
         titleButton = "Accepted";
     } else if (isApprove === false) {
-        backgroundColor = "red";
-        colorButton = "red";
+        backgroundColor = "";
+        colorButton = "tomato";
         iconName = "progress-close";
         titleButton = "Rejected";
     } else {
-        backgroundColor = "grey";
+        backgroundColor = "slategray";
         colorButton = "white";
         iconName = "progress-clock";
         titleButton = "Pending..";
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     name: {
-        fontSize: 24,
+        fontSize: 18,
         fontWeight: "bold",
         marginBottom: 10,
         color: "white",

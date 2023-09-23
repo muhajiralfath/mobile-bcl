@@ -33,7 +33,7 @@ const UmkmService = () => {
 
     const getById = async (umkmId) => {
         try {
-            const result = apiClient({
+            const result = await apiClient({
                 method: "get",
                 url: `/api/umkm/${umkmId}`,
             });
@@ -44,9 +44,9 @@ const UmkmService = () => {
         }
     };
 
-    const getByDebtorID = async (debtorId) => {
+    const getByDebtorId = async (debtorId) => {
         try {
-            const result = apiClient({
+            const result = await apiClient({
                 method: "get",
                 url: `/api/umkm/debtorId/${debtorId}`,
             });
@@ -61,7 +61,7 @@ const UmkmService = () => {
         createUmkm,
         updateUmkm,
         getById,
-        getByDebtorID,
+        getByDebtorId,
     };
 };
 

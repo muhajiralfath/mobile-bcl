@@ -20,6 +20,8 @@ import { Profile } from "../screens/Profile/Profile";
 import { Submission } from "../screens/Submission/Submission";
 import SubmissionService from "../services/SubmissionService";
 import {MyBill} from "../screens/MyBill/MyBill";
+import { FormSubmisson } from "../screens/Form/FormSubmission";
+import UmkmService from "../services/UmkmService";
 
 const Stack = createNativeStackNavigator();
 
@@ -72,7 +74,13 @@ const AppNavigation = () => {
                     )}
                 </Stack.Screen>
                 <Stack.Screen name={PATH.FORM} options={{ headerShown: false }}>
-                    {() => <FormScreen />}
+                    {() => (
+                        <FormScreen
+                            form={() =>
+                                FormSubmisson(SubmissionService, UmkmService)
+                            }
+                        />
+                    )}
                 </Stack.Screen>
             </Stack.Navigator>
         </NavigationContainer>

@@ -9,6 +9,8 @@ import { useDispatch } from "react-redux";
 import { setIsLoading } from "../../store/Loading/LoadingSlice";
 import { useEffect } from "react";
 import EmpetyListScreen from "../../shared/components/EmpetyListScreen";
+import { onNavigate } from "../../navigation/RootNavigation";
+import PATH from "../../navigation/NavigationPath";
 
 const SubmissionScreen = ({ submission }) => {
     const { getSubmission } = submission();
@@ -23,7 +25,6 @@ const SubmissionScreen = ({ submission }) => {
         dispatch(setIsLoading(true));
         const debtorId = await AsyncStorage.getItem("debtorId");
         const dataSubmis = await getSubmission(debtorId);
-        console.log(dataSubmis);
         setSubmissions(dataSubmis);
         dispatch(setIsLoading(false));
     };
@@ -51,6 +52,11 @@ const SubmissionScreen = ({ submission }) => {
                     title="Add Submission"
                     color="#323549"
                     trailing={(props) => <Icon name="plus" {...props} />}
+                    onPress={() => {
+                        onNavigate({
+                            routeName: PATH.FORM,
+                        });
+                    }}
                 />
             </View>
             <View>
@@ -59,6 +65,7 @@ const SubmissionScreen = ({ submission }) => {
                     renderItem={renderItem}
                     keyExtractor={(item) => item.id}
                     ListEmptyComponent={() => <EmpetyListScreen />}
+                    showsVerticalScrollIndicator={false}
                 />
             </View>
         </View>

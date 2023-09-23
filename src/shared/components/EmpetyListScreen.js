@@ -23,7 +23,7 @@ const EmpetyListScreen = () => {
                     fontWeight: 200,
                 }}
             >
-                Transaction is Empety
+                Submission Is Empety
             </Text>
         </View>
     );

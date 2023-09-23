@@ -38,7 +38,7 @@ const HomeScreen = ({ home }) => {
 
     const logout = async () => {
         dispatch(setIsLoading(true));
-        await AsyncStorage.removeItem("token");
+        await AsyncStorage.clear();
         onNavigate({
             routeName: PATH.LOGIN,
         });
@@ -120,6 +120,11 @@ const HomeScreen = ({ home }) => {
                         colorIcon="white"
                         nameCard="Apply Submission"
                         bgColor="#4682b4"
+                        onPress={() => {
+                            onNavigate({
+                                routeName: PATH.FORM,
+                            });
+                        }}
                     />
                     <ButtonCardComponent
                         nameIcon="book-open-outline"

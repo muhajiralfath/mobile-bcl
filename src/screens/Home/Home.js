@@ -11,7 +11,8 @@ export const Home = (serviceOne, serviceTwo) => {
         try {
             dispatch(setIsLoading(true));
             const dataDebtor = await getDebtorByToken();
-            AsyncStorage.setItem("debtorId", dataDebtor.debtorId);
+            await AsyncStorage.setItem("debtorId", dataDebtor.debtorId);
+            console.log(dataDebtor.debtorId);
             return dataDebtor;
         } catch (err) {
             console.log("getDebtor", err);
