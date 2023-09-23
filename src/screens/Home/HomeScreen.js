@@ -48,7 +48,6 @@ const HomeScreen = ({ home }) => {
     const toProfile = () => {
         onNavigate({
             routeName: PATH.PROFILE,
-            isReplace: true,
         });
     };
 
@@ -140,6 +139,11 @@ const HomeScreen = ({ home }) => {
                         colorIcon="white"
                         nameCard="View Submission"
                         bgColor="seagreen"
+                        onPress={() => {
+                            onNavigate({
+                                routeName: PATH.SUBMISSION,
+                            });
+                        }}
                     />
                 </View>
             </View>

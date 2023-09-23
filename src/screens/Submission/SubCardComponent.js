@@ -10,10 +10,7 @@ const SubCardComponent = ({
     totalDebt,
     monthDebt,
     date,
-    iconStatus,
-    MessgStatus,
-    colorStatus,
-    bgColor,
+    isApprove,
 }) => {
     const loanAmountPrice = new Intl.NumberFormat("id-ID", {
         style: "currency",
@@ -27,8 +24,11 @@ const SubCardComponent = ({
         style: "currency",
         currency: "IDR",
     }).format(monthDebt);
+
+    const { backgroundColor, iconName, colorButton, titleButton } =
+        getStyleCard(isApprove);
     return (
-        <View style={[styles.card, { backgroundColor: `${bgColor}` }]}>
+        <View style={[styles.card, { backgroundColor: "grey" }]}>
             <View>
                 <Text style={styles.name}>{umkmName}</Text>
                 <Text style={styles.text}>Loan Amount : {loanAmountPrice}</Text>
@@ -38,12 +38,10 @@ const SubCardComponent = ({
                 <Text style={styles.text}>Date : {date} </Text>
             </View>
             <Button
-                title={MessgStatus}
+                title={titleButton}
                 variant="contained"
-                color={colorStatus}
-                trailing={(props) => (
-                    <Icon name={`progress-${iconStatus}`} {...props} />
-                )}
+                color={colorButton}
+                trailing={(props) => <Icon name={iconName} {...props} />}
                 style={styles.button}
             />
         </View>
@@ -51,6 +49,27 @@ const SubCardComponent = ({
 };
 
 export default SubCardComponent;
+
+const getStyleCard = (isApprove) => {
+    let backgroundColor, iconName, colorButton, titleButton;
+    if (isApprove === true) {
+        backgroundColor = "green";
+        iconName = "progress-check";
+        colorButton = "green";
+        titleButton = "Accepted";
+    } else if (isApprove === false) {
+        backgroundColor = "red";
+        colorButton = "red";
+        iconName = "progress-close";
+        titleButton = "Rejected";
+    } else {
+        backgroundColor = "grey";
+        colorButton = "white";
+        iconName = "progress-clock";
+        titleButton = "Pending..";
+    }
+    return { backgroundColor, iconName, titleButton, colorButton };
+};
 
 const styles = StyleSheet.create({
     card: {
