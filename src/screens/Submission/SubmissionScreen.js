@@ -4,7 +4,9 @@ import { Button } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import SubCardComponent from "./SubCardComponent";
 
-const SubmissionScreen = () => {
+const SubmissionScreen = ({ submission }) => {
+    const { getSubmission } = submission();
+
     return (
         <View style={styles.container}>
             <View>

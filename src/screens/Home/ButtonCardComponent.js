@@ -3,10 +3,17 @@ import React from "react";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Text } from "@react-native-material/core";
 
-const ButtonCardComponent = ({ nameIcon, colorIcon, nameCard, bgColor }) => {
+const ButtonCardComponent = ({
+    nameIcon,
+    colorIcon,
+    nameCard,
+    bgColor,
+    onPress,
+}) => {
     return (
         <TouchableOpacity
             style={[styles.button, { backgroundColor: `${bgColor}` }]}
+            onPress={onPress}
         >
             <Icon name={nameIcon} color={colorIcon} size={40} />
             <Text style={styles.text}>{nameCard}</Text>

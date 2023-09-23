@@ -10,11 +10,6 @@ import { setIsLoading } from "../../store/Loading/LoadingSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { onNavigate } from "../../navigation/RootNavigation";
 import PATH from "../../navigation/NavigationPath";
-import {
-    setDataDebtor,
-    setDebtorId,
-    setDebtorName,
-} from "../../store/Debtor/DebtorSlice";
 
 const HomeScreen = ({ home }) => {
     const { getDebtor, getBill } = home();
@@ -22,7 +17,6 @@ const HomeScreen = ({ home }) => {
     const [tenor, setTenor] = useState(0);
     const [bills, setBills] = useState([]);
     const [debtorName, setDebtorName] = useState("-");
-    const [debtorId, setDebtorId] = useState("");
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -37,7 +31,6 @@ const HomeScreen = ({ home }) => {
 
     const loadData = async () => {
         const data = await getDebtor();
-        setDebtorId((id) => (id = data.debtorId));
         setDebtorName((name) => (name = data.name));
         const billData = await getBill(data.debtorId);
 

@@ -16,7 +16,9 @@ import { navigationRef } from "./RootNavigation";
 import { Home } from "../screens/Home/Home";
 import DebtorService from "../services/DebtorService";
 import BillService from "../services/BillService";
-import {Profile} from "../screens/Profile/Profile";
+import { Profile } from "../screens/Profile/Profile";
+import { Submission } from "../screens/Submission/Submission";
+import SubmissionService from "../services/SubmissionService";
 
 const Stack = createNativeStackNavigator();
 
@@ -62,7 +64,11 @@ const AppNavigation = () => {
                     name={PATH.SUBMISSION}
                     options={{ headerShown: false }}
                 >
-                    {() => <SubmissionScreen />}
+                    {() => (
+                        <SubmissionScreen
+                            submission={() => Submission(SubmissionService)}
+                        />
+                    )}
                 </Stack.Screen>
                 <Stack.Screen name={PATH.FORM} options={{ headerShown: false }}>
                     {() => <FormScreen />}

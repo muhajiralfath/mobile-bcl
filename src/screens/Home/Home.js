@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
 import { setIsLoading } from "../../store/Loading/LoadingSlice";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const Home = (serviceOne, serviceTwo) => {
     const { getDebtorByToken, updateDebtor } = serviceOne();
@@ -10,6 +11,7 @@ export const Home = (serviceOne, serviceTwo) => {
         try {
             dispatch(setIsLoading(true));
             const dataDebtor = await getDebtorByToken();
+            AsyncStorage.setItem("debtorId", dataDebtor.name);
             return dataDebtor;
         } catch (err) {
             console.log("getDebtor", err);
