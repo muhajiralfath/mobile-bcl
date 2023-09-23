@@ -4,7 +4,7 @@ import { GlobalError, UnauthorizedError } from "../utils/AppError";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const client = axios.create({
-    baseURL: "http://10.10.100.223:8080",
+    baseURL: " https://67bd-103-78-25-190.ngrok-free.app",
 });
 
 client.interceptors.request.use(async (config) => {

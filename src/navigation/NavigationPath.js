@@ -7,4 +7,5 @@ export default PATH = {
   HOME: "HOME",
   SUBMISSION: "SUBMISSION",
   FORM: "FORM",
+  MIDTRANS: "MIDTRANS",
 };

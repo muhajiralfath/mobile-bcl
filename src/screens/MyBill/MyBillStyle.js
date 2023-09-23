@@ -1,12 +1,16 @@
 import {StyleSheet} from "react-native";
 
 const MyBillStyle = StyleSheet.create({
+    topWrapper: {
+        flex: 1
+    },
+    scrollWrapper: {
+        flex: 0.92
+    },
     container: {
-        flex: 1,
         backgroundColor: "white",
         justifyContent: "center",
         alignItems: "center",
-        marginTop:5
     },
     card: {
         width: "93%",
@@ -39,15 +43,19 @@ const MyBillStyle = StyleSheet.create({
         fontWeight: "bold",
     },
     titleView:{
+        flex: 0.08,
         justifyContent:"center",
         height:50,
         width:"100%",
-        backgroundColor:"#2D303F"
+        backgroundColor:"#2D303F",
     },
     paymentModal: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    redText: {
+        color: 'red',
     }
 })
 

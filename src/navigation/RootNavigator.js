@@ -25,6 +25,8 @@ import SubmissionService from "../services/SubmissionService";
 import {MyBill} from "../screens/MyBill/MyBill";
 import { FormSubmisson } from "../screens/Form/FormSubmission";
 import UmkmService from "../services/UmkmService";
+import PaymentService from "../services/PaymentService";
+import MidtransScreen from "../screens/Midtrans/MidtransScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -69,7 +71,7 @@ const AppNavigation = () => {
                     name={PATH.MYBILL}
                     options={{ headerShown: false }}
                 >
-                    {() => <MyBillScreen myBill={() => MyBill(BillService)} />}
+                    {() => <MyBillScreen myBill={() => MyBill(BillService, PaymentService)} />}
                 </Stack.Screen>
 
                 <Stack.Screen
@@ -91,6 +93,8 @@ const AppNavigation = () => {
                         />
                     )}
                 </Stack.Screen>
+
+                <Stack.Screen name={PATH.MIDTRANS} options={{ headerShown:false }} component={MidtransScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     );
