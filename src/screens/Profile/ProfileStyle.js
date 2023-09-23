@@ -50,7 +50,7 @@ const ProfileStyle = StyleSheet.create({
     },
     viewBtnSIUP:{
         width:"50%",
-        marginBottom:5,
+        marginBottom:10,
         justifyContent:"center"
     }
 })
