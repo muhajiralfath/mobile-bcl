@@ -56,6 +56,14 @@ const MyBillStyle = StyleSheet.create({
     },
     redText: {
         color: 'red',
+    },
+    notFoundText: {
+        marginTop: 20,
+        fontSize: 20,
+        color: 'grey',
+    },
+    notFoundWrapper: {
+        backgroundColor: 'white',
     }
 })
 
