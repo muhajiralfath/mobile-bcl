@@ -28,9 +28,9 @@ const FormScreen = ({ form }) => {
     }, []);
 
     const getUmkmData = async () => {
-        const umkmData = await getUmkm();
-        setUmkmId((state) => (state = umkmData.umkmId));
-        setUmkmType((state) => (state = umkmData.umkmType));
+            const umkmData = await getUmkm();
+            setUmkmId((state) => (state = umkmData.umkmId));
+            setUmkmType((state) => (state = umkmData.umkmType));
     };
 
     const handleSubmit = async () => {
@@ -121,7 +121,7 @@ const FormScreen = ({ form }) => {
                             marginBottom: 20,
                         }}
                         variant="outlined"
-                        title="Back to Home"
+                        title="Cancel"
                         leading={(props) => (
                             <Icon name="backspace" {...props} />
                         )}

@@ -15,7 +15,7 @@ const ButtonCardComponent = ({
             style={[styles.button, { backgroundColor: `${bgColor}` }]}
             onPress={onPress}
         >
-            <Icon name={nameIcon} color={colorIcon} size={40} />
+            <Icon name={nameIcon} color={colorIcon} size={30} />
             <Text style={styles.text}>{nameCard}</Text>
         </TouchableOpacity>
     );
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     text: {
-        fontSize: 24,
+        fontSize: 20,
         color: "white",
     },
 });
