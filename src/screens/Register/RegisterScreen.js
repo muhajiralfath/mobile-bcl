@@ -81,8 +81,8 @@ export default function RegisterScreen({ register }) {
       <View style={{ flex: 2, paddingHorizontal: 15 }}>
         <View style={styles.form}>
           <View style={styles.headerForm}>
-            <Text style={styles.title}>Assalamu'alaikum!,</Text>
-            <Text style={styles.title}>Selamat Datang Ya Akhi</Text>
+            <Text style={styles.title}>Make Your Account</Text>
+            <Text style={styles.title}>Register</Text>
           </View>
           <Text style={styles.label}>Email</Text>
           <TextInput
@@ -129,6 +129,8 @@ export default function RegisterScreen({ register }) {
             <TouchableOpacity style={styles.btn} onPress={submitRegister}>
               <Text style={{ color: "white" }}>Register</Text>
             </TouchableOpacity>
+          </View>
+          <View style={{marginVertical: 5}}>
             <Text style={{ color: "#2D303F" }}>
               Already have an account? {"           "}
               <Text
@@ -162,7 +164,7 @@ const styles = StyleSheet.create({
   headerForm: {
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 50,
+    paddingVertical: 30,
   },
   title: {
     fontWeight: "bold",

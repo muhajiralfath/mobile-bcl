@@ -74,8 +74,8 @@ export default function LoginScreen({ login }) {
       <View style={{ flex: 2, paddingHorizontal: 15 }}>
         <View style={styles.form}>
           <View style={styles.headerForm}>
-            <Text style={styles.title}>Assalamu'alaikum!,</Text>
-            <Text style={styles.title}>Selamat Datang Ya Akhi</Text>
+            <Text style={styles.title}>Welcome to BCL App</Text>
+            <Text style={styles.title}>Login</Text>
           </View>
           <Text style={styles.label}>Email</Text>
           <TextInput
@@ -108,6 +108,8 @@ export default function LoginScreen({ login }) {
             <TouchableOpacity style={styles.btn} onPress={submitLogin}>
               <Text style={{ color: "white" }}>Login</Text>
             </TouchableOpacity>
+          </View>
+          <View style={{marginVertical: 5}}>
             <Text style={{ color: "#2D303F" }}>
               Don't Have an account yet? {"    "}
               <Text
@@ -141,7 +143,7 @@ const styles = StyleSheet.create({
   headerForm: {
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 50,
+    paddingVertical: 30,
   },
   title: {
     fontWeight: "bold",

@@ -6,7 +6,7 @@ import PATH from "../../navigation/NavigationPath";
 export default function SplashScreen({ navigation }) {
     useEffect(() => {
         setTimeout(() => {
-            navigation.navigate(PATH.LOGIN);
+            navigation.replace(PATH.LOGIN);
         }, 1000);
     }, []);
 
