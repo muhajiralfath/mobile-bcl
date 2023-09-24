@@ -19,9 +19,10 @@ client.interceptors.request.use(async (config) => {
         const token = await AsyncStorage.getItem("token");
         config.headers = {
             Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+            "Content-Type" : "multipart/form-data"
         }
     }
-    console.log('config: ', config)
     return config;
 });
 

@@ -87,16 +87,21 @@ export default function ProfileScreen({profile}){
             const formData = new FormData()
             formData.append("image", {
                 uri: uri,
-                name: new Date().toLocaleString() + "_fnk.jpeg",
+                name: Math.random() + "_fnk.jpeg",
                 type: "image/jpeg"
             })
             const response = await onUploadPicture(formData);
-            console.log(response.data.url)
+            console.log("Inii setelah upload", response.data.url)
 
             if (response.data.url) {
-                setImage(state => state = `${baseUrl}/${response.data.url}`)
+                const newImageUrl = `${baseUrl}${response.data.url}`
+                setImage(newImageUrl)
+                console.log("new Image Url", newImageUrl)
+                console.log("image baru", image)
+
+                // setImage((state) => (state) = `${baseUrl}/${response.data.url}`)
             }
-            // loadData()
+
         } catch (err) {
             console.log("Error Uploading Image", err)
         }
