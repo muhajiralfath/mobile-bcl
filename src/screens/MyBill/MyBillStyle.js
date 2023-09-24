@@ -5,7 +5,7 @@ const MyBillStyle = StyleSheet.create({
         flex: 1
     },
     scrollWrapper: {
-        flex: 9
+        flex: 13
     },
     container: {
         backgroundColor: "white",
@@ -43,7 +43,7 @@ const MyBillStyle = StyleSheet.create({
         fontWeight: "bold",
     },
     titleView:{
-        flex: 0.2,
+        flex: 0.08,
         justifyContent:"center",
         height:50,
         width:"100%",
@@ -63,6 +63,7 @@ const MyBillStyle = StyleSheet.create({
         color: 'grey',
     },
     notFoundWrapper: {
+
         backgroundColor: 'white',
     }
 })

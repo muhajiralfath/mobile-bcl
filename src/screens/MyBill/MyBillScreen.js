@@ -34,10 +34,10 @@ export default function MyBillScreen({myBill}) {
             <View style={MyBillStyle.titleView}>
                 <Text style={{textAlign: "center"}} variant="h6" color={"white"}>My Bill</Text>
             </View>
-            <ScrollView style={MyBillStyle.notFoundWrapper}>
+            <ScrollView style={MyBillStyle.scrollWrapper}>
                 <View style={MyBillStyle.container}>
                     {bills === null || bills === undefined ?
-                        (<View style={MyBillStyle.scrollWrapper}>
+                        (<View style={MyBillStyle.notFoundWrapper}>
                             <Text style={MyBillStyle.notFoundText}>Bill not found</Text>
                         </View>)
                         :
