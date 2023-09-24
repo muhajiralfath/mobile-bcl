@@ -1,9 +1,10 @@
 import {setIsLoading} from "../../store/Loading/LoadingSlice";
 import {useDispatch} from "react-redux";
 
-export const Profile = (debtorService, umkmService) => {
+export const Profile = (debtorService, umkmService, pictureService) => {
     const {getDebtorByToken, updateDebtor} = debtorService()
     const {createUmkm, updateUmkm, getById, getByDebtorId} = umkmService()
+    const {uploadProfilePicture, deleteProfilePicture} = pictureService()
     const dispatch = useDispatch();
 
     const getDebtor = async () => {
@@ -21,9 +22,9 @@ export const Profile = (debtorService, umkmService) => {
         try {
             dispatch(setIsLoading(true));
             await updateDebtor(dataDebtor)
-        }catch (e){
+        } catch (e) {
             console.log("Profile_onUpdate", e)
-        }finally {
+        } finally {
             dispatch(setIsLoading(false));
         }
     }
@@ -32,9 +33,9 @@ export const Profile = (debtorService, umkmService) => {
             dispatch(setIsLoading(true));
             const umkm = await getByDebtorId(debtorId)
             return umkm
-        }catch (e){
+        } catch (e) {
             console.log("Profile_getUMKMByDebtorId", e)
-        }finally {
+        } finally {
             dispatch(setIsLoading(false));
         }
     }
@@ -43,9 +44,9 @@ export const Profile = (debtorService, umkmService) => {
             dispatch(setIsLoading(true));
             const result = await updateUmkm(dataUmkm)
             return result;
-        }catch (e){
+        } catch (e) {
             console.log("Profile_onUpdateUmkm", e)
-        }finally {
+        } finally {
             dispatch(setIsLoading(false));
         }
     }
@@ -54,9 +55,31 @@ export const Profile = (debtorService, umkmService) => {
             dispatch(setIsLoading(true));
             const result = await createUmkm(dataUmkm)
             return result;
-        }catch (e){
+        } catch (e) {
             console.log("Profile_onCreateUmkm", e)
-        }finally {
+        } finally {
+            dispatch(setIsLoading(false));
+        }
+    }
+
+    const onUploadPicture = async (formData) => {
+        try {
+            dispatch(setIsLoading(true))
+            return await uploadProfilePicture(formData)
+        } catch (e) {
+            console.log("Profile_onCreateUmkm", e)
+        } finally {
+            dispatch(setIsLoading(false));
+        }
+    }
+
+    const onDeletePicture = async (pictureId) => {
+        try {
+            dispatch(setIsLoading(true))
+            return await deleteProfilePicture(pictureId)
+        } catch (e) {
+            console.log("Profile_onCreateUmkm", e)
+        } finally {
             dispatch(setIsLoading(false));
         }
     }
@@ -66,6 +89,8 @@ export const Profile = (debtorService, umkmService) => {
         onUpdate,
         getUMKMByDebtorId,
         onUpdateUmkm,
-        onCreateUmkm
+        onCreateUmkm,
+        onUploadPicture,
+        onDeletePicture
     }
 }

@@ -4,7 +4,7 @@ import { GlobalError, UnauthorizedError } from "../utils/AppError";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const client = axios.create({
-    baseURL: "http://10.10.100.196:8080",
+    baseURL: "http://10.10.100.223:8080",
 });
 
 client.interceptors.request.use(async (config) => {
@@ -14,6 +14,14 @@ client.interceptors.request.use(async (config) => {
             Authorization: `Bearer ${token}`,
         };
     }
+
+    if (config.url === '/api/users/profile-picture'){
+        const token = await AsyncStorage.getItem("token");
+        config.headers = {
+            Authorization: `Bearer ${token}`,
+        }
+    }
+    console.log('config: ', config)
     return config;
 });
 

@@ -27,6 +27,7 @@ import {MyBill} from "../screens/MyBill/MyBill";
 import { FormSubmisson } from "../screens/Form/FormSubmission";
 import PaymentService from "../services/PaymentService";
 import MidtransScreen from "../screens/Midtrans/MidtransScreen";
+import PictureService from "../services/PictureService";
 
 const Stack = createNativeStackNavigator();
 
@@ -64,7 +65,7 @@ const AppNavigation = () => {
                     name={PATH.PROFILE}
                     options={{ headerShown: false }}
                 >
-                    {() => <ProfileScreen profile={() => Profile(DebtorService, UmkmService)} />}
+                    {() => <ProfileScreen profile={() => Profile(DebtorService, UmkmService, PictureService)} />}
                 </Stack.Screen>
 
                 <Stack.Screen
