@@ -3,10 +3,21 @@ import {useDispatch} from "react-redux";
 
 export const Profile = (debtorService, umkmService, pictureService) => {
     const {getDebtorByToken, updateDebtor} = debtorService()
-    const {createUmkm, updateUmkm, getById, getByDebtorId} = umkmService()
+    const {createUmkm, updateUmkm, getById, getByDebtorId, getDocument} = umkmService()
     const {uploadProfilePicture, deleteProfilePicture} = pictureService()
     const dispatch = useDispatch();
 
+    const getDocumentUmkm = async () => {
+        try {
+            dispatch(setIsLoading(true));
+            const document = await getDocument();
+            return document;
+        } catch (err) {
+            console.log("getDocumentUmkm", err);
+        } finally {
+            dispatch(setIsLoading(false));
+        }
+    }
     const getDebtor = async () => {
         try {
             dispatch(setIsLoading(true));
@@ -89,6 +100,7 @@ export const Profile = (debtorService, umkmService, pictureService) => {
         onUpdate,
         getUMKMByDebtorId,
         onUpdateUmkm,
+        getDocumentUmkm,
         onCreateUmkm,
         onUploadPicture,
         onDeletePicture

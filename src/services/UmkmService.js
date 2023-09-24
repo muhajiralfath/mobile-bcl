@@ -44,15 +44,28 @@ const UmkmService = () => {
         }
     };
 
+    const getDocument = async () => {
+        try {
+            const result = await apiClient({
+                method: "get",
+                url: `/api/umkm/download-document`
+            });
+            return result;
+        } catch (err) {
+            console.log("Error Service getDocument Umkm", err);
+            throw err;
+        }
+    };
     const getByDebtorId = async (debtorId) => {
         try {
             const result = await apiClient({
                 method: "get",
                 url: `/api/umkm/debtorId/${debtorId}`,
             });
+            console.log("66", result)
             return result.data;
         } catch (err) {
-            console.log("Error Service getById Umkm", err);
+            console.log("Error Service getByDebtorId Umkm", err);
             throw err;
         }
     };
@@ -62,6 +75,7 @@ const UmkmService = () => {
         updateUmkm,
         getById,
         getByDebtorId,
+        getDocument
     };
 };
 

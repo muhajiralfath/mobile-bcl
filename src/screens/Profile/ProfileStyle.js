@@ -49,9 +49,12 @@ const ProfileStyle = StyleSheet.create({
         flexDirection:"row"
     },
     viewBtnSIUP:{
-        width:"50%",
+        width:"30%",
         marginBottom:10,
-        justifyContent:"center"
+    },
+    groupBtnSIUP:{
+        flexDirection:"row",
+        justifyContent:"space-around"
     }
 })
 

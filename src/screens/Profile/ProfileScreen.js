@@ -4,7 +4,7 @@ import {TextInput, Text, Button, Avatar, IconButton} from "@react-native-materia
 import React, {useCallback, useEffect, useState} from "react";
 import {Picker} from "@react-native-picker/picker";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-
+import * as FileSystem from 'expo-file-system';
 import * as DocumentPicker from 'expo-document-picker';
 import {Profile} from "./Profile";
 import {useSelector} from "react-redux";
@@ -12,8 +12,7 @@ import * as ImagePicker from 'expo-image-picker';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {useFocusEffect} from "@react-navigation/native";
 
-export default function ProfileScreen({profile}) {
-    // sementaraa
+export default function ProfileScreen({profile}){
     const {
         getDebtor,
         onUpdate,
@@ -21,7 +20,8 @@ export default function ProfileScreen({profile}) {
         onUpdateUmkm,
         onCreateUmkm,
         onUploadPicture,
-        onDeletePicture
+        onDeletePicture,
+        getDocumentUmkm
     } = profile()
 
     // Data Profile
@@ -137,7 +137,7 @@ export default function ProfileScreen({profile}) {
         setAddress(dataDebtor.address || "")
 
         const dataUmkm = await getUMKMByDebtorId(dataDebtor.debtorId)
-        if (dataUmkm) {
+        if(dataUmkm){
             setUmkmId(dataUmkm.umkmId)
             setNoSiup(dataUmkm.noSiup)
             setUmkmName(dataUmkm.umkmName)
@@ -163,7 +163,7 @@ export default function ProfileScreen({profile}) {
         try {
             console.log("check permission")
             const result = true
-            console.log("resultt ini", result)
+            console.log("result ini", result)
 
             if (!result) {
                 const granted = await PermissionsAndroid.request(
@@ -200,12 +200,8 @@ export default function ProfileScreen({profile}) {
     }
 
     async function selectFile() {
-        console.log("Check button atas:")
         try {
-            console.log("Check button:")
             const result = await checkPermissions();
-
-            console.log(result)
 
             if (result) {
                 const result = await DocumentPicker.getDocumentAsync({
@@ -224,7 +220,6 @@ export default function ProfileScreen({profile}) {
             }
         } catch (err) {
             console.warn(err);
-            console.log("Gagal")
             return null;
         }
     }
@@ -326,7 +321,31 @@ export default function ProfileScreen({profile}) {
         }
     };
 
-    return (
+    const onDownloadSiup = async () => {
+        try {
+            const permissions = await checkPermissions();
+            if(permissions){
+                const pdfData = await getDocumentUmkm()
+
+                // Tentukan nama file dan lokasi penyimpanannya
+                const fileName = 'nama_file_anda.pdf'; // Gantilah dengan nama yang sesuai
+                const fileUri = FileSystem.documentDirectory + fileName;
+
+                // Simpan data PDF ke penyimpanan lokal
+                await FileSystem.writeAsStringAsync(fileUri, pdfData, {
+                    encoding: FileSystem.EncodingType.Base64, // Data PDF dalam format Base64
+                });
+
+                console.log('File PDF telah disimpan di:', fileUri);
+                return fileUri;
+            }
+        } catch (error) {
+            console.error('Error saat mengunduh dan menyimpan file PDF:', error);
+            throw error;
+        }
+    }
+
+    return(
         <ScrollView>
             <View style={LoginStyle.container}>
                 <View style={LoginStyle.card}>
@@ -392,12 +411,17 @@ export default function ProfileScreen({profile}) {
                         <Text style={LoginStyle.cardHeaderText}>UMKM Detail</Text>
                     </View>
                     <View style={LoginStyle.cardContent}>
-                        <View style={LoginStyle.viewBtnSIUP}>
-                            <Button title="Upload SIUP" onPress={() => {
-                                selectFile().then((data) => {
-                                    setFileSIUP(data)
-                                })
-                            }}/>
+                        <View style={LoginStyle.groupBtnSIUP}>
+                            <View style={LoginStyle.viewBtnSIUP}>
+                                <Button variant="outlined" leading={props => <Icon name="upload" {...props} />} title="SIUP" onPress={() => {
+                                    selectFile().then((data) => {
+                                        setFileSIUP(data)
+                                    })
+                                }}/>
+                            </View>
+                            <View style={LoginStyle.viewBtnSIUP}>
+                                <Button variant="outlined" leading={props => <Icon name="download" {...props} />} title="SIUP" onPress={onDownloadSiup} />
+                            </View>
                         </View>
                         <TextInput color={"#2D303F"} style={{marginTop: 5}} label="* Name" variant="standard"
                                    value={umkmName} onChangeText={(val) => setUmkmName(val)}/>
