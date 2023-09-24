@@ -1,5 +1,5 @@
 import { Image, StyleSheet, Text, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import { Button } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import CardComponent from "./CardComponent";
@@ -10,6 +10,7 @@ import { setIsLoading } from "../../store/Loading/LoadingSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { onNavigate } from "../../navigation/RootNavigation";
 import PATH from "../../navigation/NavigationPath";
+import {useFocusEffect} from "@react-navigation/native";
 
 const HomeScreen = ({ home }) => {
     const { getDebtor, getBill } = home();
@@ -19,9 +20,11 @@ const HomeScreen = ({ home }) => {
     const [debtorName, setDebtorName] = useState("-");
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        loadData();
-    }, []);
+    useFocusEffect(
+        useCallback(() => {
+            loadData()
+        }, [])
+    )
 
     useEffect(() => {
         const { billsAmount, tenor } = calculateBills();
@@ -48,6 +51,7 @@ const HomeScreen = ({ home }) => {
     const toProfile = () => {
         onNavigate({
             routeName: PATH.PROFILE,
+            isReplace: false
         });
     };
 
@@ -147,6 +151,7 @@ const HomeScreen = ({ home }) => {
                         onPress={() => {
                             onNavigate({
                                 routeName: PATH.SUBMISSION,
+                                isReplace: false
                             });
                         }}
                     />
