@@ -1,3 +1,3 @@
 export default Constant = {
-    BASEURL: "http://10.10.100.179:8080"
+    BASEURL: "http://159.65.7.58:8080"
 }
