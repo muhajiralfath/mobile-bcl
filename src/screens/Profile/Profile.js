@@ -1,23 +1,54 @@
 import {setIsLoading} from "../../store/Loading/LoadingSlice";
 import {useDispatch} from "react-redux";
+import * as FileSystem from "expo-file-system";
+import Constant from "../../utils/Constant";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {shareAsync} from "expo-sharing";
 
 export const Profile = (debtorService, umkmService, pictureService) => {
     const {getDebtorByToken, updateDebtor} = debtorService()
-    const {createUmkm, updateUmkm, getById, getByDebtorId, getDocument} = umkmService()
+    const {createUmkm, updateUmkm, getById, getByDebtorId, getDocument, uploadDocument} = umkmService()
     const {uploadProfilePicture, deleteProfilePicture} = pictureService()
     const dispatch = useDispatch();
 
     const getDocumentUmkm = async () => {
         try {
             dispatch(setIsLoading(true));
-            const document = await getDocument();
-            return document;
+
+            const url = `${Constant.BASEURL}/api/umkm/download-document`;
+            const token = await AsyncStorage.getItem('token');
+            const fileUri = `${FileSystem.documentDirectory}/siupDocument.pdf`;
+
+            const res = await FileSystem.downloadAsync(
+                url,
+                fileUri,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+            if (res.status === 200) {
+                await shareAsync(res.uri);
+            }
         } catch (err) {
             console.log("getDocumentUmkm", err);
         } finally {
             dispatch(setIsLoading(false));
         }
     }
+
+    const uploadDocumentUmkm = async (formData) => {
+        try {
+            dispatch(setIsLoading(true));
+            return await uploadDocument(formData);
+        } catch (err) {
+            throw err;
+        } finally {
+            dispatch(setIsLoading(false));
+        }
+    }
+
     const getDebtor = async () => {
         try {
             dispatch(setIsLoading(true));
@@ -101,8 +132,9 @@ export const Profile = (debtorService, umkmService, pictureService) => {
         getUMKMByDebtorId,
         onUpdateUmkm,
         getDocumentUmkm,
+        uploadDocumentUmkm,
         onCreateUmkm,
         onUploadPicture,
-        onDeletePicture
+        onDeletePicture,
     }
 }

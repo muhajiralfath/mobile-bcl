@@ -2,9 +2,10 @@ import axios from "axios";
 import LocalStorage from "../utils/LocalStorage";
 import { GlobalError, UnauthorizedError } from "../utils/AppError";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Constant from "../utils/Constant";
 
 const client = axios.create({
-    baseURL: "http://10.10.100.223:8080",
+    baseURL: Constant.BASEURL,
 });
 
 client.interceptors.request.use(async (config) => {
@@ -23,12 +24,25 @@ client.interceptors.request.use(async (config) => {
             "Content-Type" : "multipart/form-data"
         }
     }
+
+    if (config.url === '/api/umkm/download-document') {
+        config.responseType = 'blob';
+    }
+
+    if (config.url === '/api/umkm/upload-document') {
+        config.headers = {
+            Accept: "application/json",
+            "Content-Type" : "multipart/form-data"
+        }
+        console.log("Content-Type", config.headers);
+    }
     return config;
 });
 
 const apiClient = async ({ url, method, body = null }) => {
     try {
         console.log("apiClient method:", method);
+        console.log("apiClient body", body);
         const result = await client[method](url, body);
         return result.data;
     } catch (err) {

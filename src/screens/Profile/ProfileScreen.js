@@ -6,11 +6,10 @@ import {Picker} from "@react-native-picker/picker";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import * as FileSystem from 'expo-file-system';
 import * as DocumentPicker from 'expo-document-picker';
-import {Profile} from "./Profile";
-import {useSelector} from "react-redux";
 import * as ImagePicker from 'expo-image-picker';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {useFocusEffect} from "@react-navigation/native";
+import Constant from "../../utils/Constant";
 
 export default function ProfileScreen({profile}){
     const {
@@ -21,7 +20,8 @@ export default function ProfileScreen({profile}){
         onCreateUmkm,
         onUploadPicture,
         onDeletePicture,
-        getDocumentUmkm
+        getDocumentUmkm,
+        uploadDocumentUmkm,
     } = profile()
 
     // Data Profile
@@ -55,16 +55,7 @@ export default function ProfileScreen({profile}){
     // const [imageId, setImageId] = useState("")
 
     // base url
-    const baseUrl = "http://10.10.100.223:8080"
-
-    // const getImageId = async () => {
-    //     const id = await AsyncStorage.getItem("imageId")
-    //     if (id) {
-    //         setImageId((state) => state = id)
-    //     }
-    // }
-
-    // const displayImage = imageId ? `${baseUrl}/api/users/profile-picture/${imageId}` : "https://mui.com/static/images/avatar/1.jpg"
+    const baseUrl = Constant.BASEURL;
 
     const loadProfilePicture = async () => {
         try {
@@ -82,7 +73,6 @@ export default function ProfileScreen({profile}){
     }
 
     const uploadImage = async (uri) => {
-        // if (!image) return
         try {
             const formData = new FormData()
             formData.append("image", {
@@ -98,8 +88,6 @@ export default function ProfileScreen({profile}){
                 setImage(newImageUrl)
                 console.log("new Image Url", newImageUrl)
                 console.log("image baru", image)
-
-                // setImage((state) => (state) = `${baseUrl}/${response.data.url}`)
             }
 
         } catch (err) {
@@ -199,29 +187,27 @@ export default function ProfileScreen({profile}){
             return false;
         }
     };
-    const uploadFile = () => {
-        console.log("filePhoto", filePhoto)
-        console.log("fileSIUP", fileSIUP)
+    const uploadFile = async (fileData) => {
+        const { name, uri, mimeType } = fileData.assets[0];
+        if (!fileData.canceled) {
+            const formData = new FormData();
+            formData.append('document', {
+                uri: uri,
+                type: mimeType,
+                name: name,
+            });
+            await uploadDocumentUmkm(formData);
+        }
     }
 
     async function selectFile() {
         try {
-            const result = await checkPermissions();
-
-            if (result) {
+            const permission = await checkPermissions();
+            if (permission) {
                 const result = await DocumentPicker.getDocumentAsync({
-                    copyToCacheDirectory: false,
-                    // type: 'image/*',
+                    type: '*/*',
                 });
-
-                return result
-
-                if (result.type === 'success') {
-                    // Printing the log realted to the file
-                    console.log('res : ' + JSON.stringify(result));
-                    // Setting the state to show single file attributes
-                    // setPhoto(result);
-                }
+                await uploadFile(result);
             }
         } catch (err) {
             console.warn(err);
@@ -330,19 +316,8 @@ export default function ProfileScreen({profile}){
         try {
             const permissions = await checkPermissions();
             if(permissions){
-                const pdfData = await getDocumentUmkm()
-
-                // Tentukan nama file dan lokasi penyimpanannya
-                const fileName = 'nama_file_anda.pdf'; // Gantilah dengan nama yang sesuai
-                const fileUri = FileSystem.documentDirectory + fileName;
-
-                // Simpan data PDF ke penyimpanan lokal
-                await FileSystem.writeAsStringAsync(fileUri, pdfData, {
-                    encoding: FileSystem.EncodingType.Base64, // Data PDF dalam format Base64
-                });
-
-                console.log('File PDF telah disimpan di:', fileUri);
-                return fileUri;
+                await getDocumentUmkm()
+                console.log("getDocumentUmkm di Profile")
             }
         } catch (error) {
             console.error('Error saat mengunduh dan menyimpan file PDF:', error);

@@ -1,4 +1,7 @@
 import { useDep } from "../context/DependencyContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Constant from "../utils/Constant";
+import axios from "axios";
 
 const UmkmService = () => {
     const { apiClient } = useDep();
@@ -46,23 +49,44 @@ const UmkmService = () => {
 
     const getDocument = async () => {
         try {
-            const result = await apiClient({
-                method: "get",
-                url: `/api/umkm/download-document`
+            return await apiClient({
+               method: "get",
+               url: "/api/umkm/download-document"
             });
-            return result;
         } catch (err) {
             console.log("Error Service getDocument Umkm", err);
             throw err;
         }
     };
+
+    const uploadDocument = async (body) => {
+        try {
+            const url = `${Constant.BASEURL}/api/umkm/upload-document`
+            const token = await AsyncStorage.getItem('token');
+            console.log("url", url);
+            console.log("body", body);
+            const requestOptions = {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    Accept: "application/json",
+                    "Content-Type" : "multipart/form-data"
+                },
+                body: body
+            };
+            return await fetch(url, requestOptions);
+        } catch (err) {
+            console.log("Error upload document", err);
+            throw err;
+        }
+    }
+
     const getByDebtorId = async (debtorId) => {
         try {
             const result = await apiClient({
                 method: "get",
                 url: `/api/umkm/debtorId/${debtorId}`,
             });
-            console.log("66", result)
             return result.data;
         } catch (err) {
             console.log("Error Service getByDebtorId Umkm", err);
@@ -75,7 +99,8 @@ const UmkmService = () => {
         updateUmkm,
         getById,
         getByDebtorId,
-        getDocument
+        getDocument,
+        uploadDocument,
     };
 };
 
