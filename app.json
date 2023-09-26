@@ -21,10 +21,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.muhajiralfath.mobilebusinesscapitalloan"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "d5af71b6-453b-4cde-9e3c-5dc7ee3f000e"
+      }
+    },
+    "owner": "muhajiralfath"
   }
 }
